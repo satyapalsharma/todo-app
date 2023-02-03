@@ -1,0 +1,440 @@
+/*
+ * src/App.css
+ *
+ * This file contains the main styles for the Todo App.
+ * It defines global styles, layout for the main application container,
+ * and styles for various components like the header, forms, lists,
+ * and individual todo items.
+ *
+ * The goal is to create a clean, modern, and user-friendly interface.
+ */
+
+/* --- 1. Global Styles & Reset --- */
+/*
+ * Apply a basic reset for consistent box-sizing and remove default margins/paddings.
+ * Define a base font and color scheme for the entire application.
+ */
+:root {
+  --primary-color: #4a90e2; /* A vibrant blue for primary actions */
+  --secondary-color: #50e3c2; /* A complementary teal for accents */
+  --background-color: #f4f7f6; /* Light background for the app */
+  --card-background: #ffffff; /* White background for cards/items */
+  --text-color: #333333; /* Dark text for readability */
+  --light-text-color: #666666; /* Lighter text for secondary info */
+  --border-color: #e0e0e0; /* Light border for separation */
+  --shadow-color: rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  --danger-color: #e74c3c; /* Red for delete actions */
+  --success-color: #2ecc71; /* Green for success/completion */
+
+  /* Category Colors (example, can be expanded) */
+  --category-work: #f39c12; /* Orange */
+  --category-personal: #9b59b6; /* Purple */
+  --category-shopping: #1abc9c; /* Turquoise */
+  --category-health: #e67e22; /* Carrot */
+  --category-default: #95a5a6; /* Grey */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top, not center vertically */
+  min-height: 100vh;
+  padding: 20px; /* Add some padding around the app */
+}
+
+/* --- 2. App Container Layout --- */
+/*
+ * Styles for the main application wrapper.
+ * Centers the app, sets a max-width, and applies a subtle shadow for depth.
+ */
+.App {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  max-width: 700px; /* Max width for a comfortable reading experience */
+  width: 100%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Spacing between major sections */
+}
+
+/* --- 3. Header Styles --- */
+/*
+ * Styles for the main title of the application.
+ */
+.App-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.App-header h1 {
+  font-size: 2.8em;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.App-header p {
+  font-size: 1.1em;
+  color: var(--light-text-color);
+}
+
+/* --- 4. General Button Styles --- */
+/*
+ * Reusable styles for buttons across the application.
+ */
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  background-color: var(--border-color);
+  color: var(--light-text-color);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #3a7bd5; /* Darker shade of primary */
+}
+
+.btn-secondary {
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.btn-secondary:hover {
+  background-color: #dcdcdc;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+/* --- 5. Form Element Styles (for TodoForm and potentially FilterControls) --- */
+/*
+ * General styles for input fields and select elements.
+ */
+input[type="text"],
+input[type="date"],
+select {
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1em;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%; /* Make inputs take full width of their container */
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); /* Primary color with transparency */
+}
+
+/* --- 6. TodoForm Component Styles --- */
+/*
+ * Styles specific to the form for adding new todos.
+ */
+.todo-form {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--card-background);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.todo-form .form-group {
+  flex: 1 1 45%; /* Allows two items per row, with wrapping */
+  min-width: 200px; /* Minimum width before wrapping */
+}
+
+.todo-form .form-group.full-width {
+  flex: 1 1 100%; /* For elements that should take full width */
+}
+
+.todo-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--light-text-color);
+  font-size: 0.95em;
+}
+
+.todo-form button {
+  flex-grow: 1; /* Allow button to grow and fill space */
+  min-width: 120px; /* Minimum width for the button */
+  margin-top: 10px; /* Space above button if it's on a new line */
+}
+
+/* --- 7. FilterControls Component Styles --- */
+/*
+ * Styles for the filtering and sorting controls.
+ */
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--card-background);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  align-items: center;
+}
+
+.filter-controls .filter-group {
+  flex: 1 1 auto; /* Allow groups to take space */
+  min-width: 150px;
+}
+
+.filter-controls label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--light-text-color);
+  font-size: 0.95em;
+}
+
+.filter-controls select {
+  width: 100%;
+}
+
+.filter-controls button {
+  margin-left: auto; /* Push the clear filters button to the right */
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* --- 8. TodoList Component Styles --- */
+/*
+ * Styles for the container of all todo items.
+ */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between individual todo items */
+}
+
+.todo-list p.no-todos {
+  text-align: center;
+  color: var(--light-text-color);
+  font-style: italic;
+  padding: 20px;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-background);
+}
+
+/* --- 9. TodoItem Component Styles --- */
+/*
+ * Styles for individual todo items, including completed state,
+ * category tags, and action buttons.
+ */
+.todo-item {
+  display: flex;
+  align-items: center;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all 0.2s ease;
+  gap: 15px; /* Space between elements within the item */
+}
+
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.todo-item input[type="checkbox"] {
+  min-width: 20px; /* Ensure checkbox has a fixed size */
+  min-height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color); /* Style the checkbox itself */
+  margin-right: 10px;
+}
+
+.todo-item-content {
+  flex-grow: 1; /* Allow content to take up available space */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.todo-item-content h3 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+  word-break: break-word; /* Prevent long words from overflowing */
+}
+
+.todo-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85em;
+  color: var(--light-text-color);
+}
+
+.todo-item-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.todo-item-meta .icon {
+  font-size: 1em; /* Adjust icon size if using icon fonts */
+}
+
+/* Category Tags */
+.category-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+  background-color: var(--category-default); /* Default category color */
+}
+
+/* Specific category colors */
+.category-tag.work { background-color: var(--category-work); }
+.category-tag.personal { background-color: var(--category-personal); }
+.category-tag.shopping { background-color: var(--category-shopping); }
+.category-tag.health { background-color: var(--category-health); }
+
+/* Due Date Styling */
+.due-date {
+  color: var(--light-text-color);
+}
+
+.due-date.overdue {
+  color: var(--danger-color);
+  font-weight: 600;
+}
+
+/* Completed State */
+.todo-item.completed {
+  opacity: 0.7;
+  background-color: #f9f9f9;
+  border-color: #e9e9e9;
+}
+
+.todo-item.completed .todo-item-content h3 {
+  text-decoration: line-through;
+  color: var(--light-text-color);
+}
+
+.todo-item.completed .todo-item-meta {
+  color: #a0a0a0;
+}
+
+/* Action Buttons for TodoItem */
+.todo-item-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+.todo-item-actions button {
+  padding: 8px 12px;
+  font-size: 0.9em;
+  border-radius: 6px;
+}
+
+.todo-item-actions .btn-edit {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.todo-item-actions .btn-edit:hover {
+  background-color: #42c2a8;
+}
+
+/* --- 10. Responsive Adjustments --- */
+/*
+ * Media queries to ensure the app looks good on smaller screens.
+ */
+@media (max-width: 768px) {
+  .App {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .App-header h1 {
+    font-size: 2.2em;
+  }
+
+  .todo-form {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .todo-form .form-group {
+    flex: 1 1 100%; /* Stack form groups vertically */
+    min-width: unset;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 15px;
+  }
+
+  .filter-controls .filter-group
