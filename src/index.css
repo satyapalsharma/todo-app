@@ -1,0 +1,249 @@
+/*
+ * src/index.css
+ * Global styles for the Todo App.
+ *
+ * This file sets up base styles, CSS variables for theming,
+ * and general typography and layout rules that apply across the application.
+ *
+ * Tech Stack: React, CSS
+ */
+
+/* -------------------------------------------------------------------------- */
+/* 1. CSS Reset & Box Sizing                                                  */
+/* -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  margin: 0;
+  padding: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Global CSS Variables (Theming)                                          */
+/* -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --color-primary: #6200ee; /* A vibrant purple for primary actions/branding */
+  --color-primary-dark: #3700b3; /* Darker shade for hover/active states */
+  --color-primary-light: #bb86fc; /* Lighter shade for accents */
+  --color-secondary: #03dac6; /* A teal for secondary actions/accents */
+  --color-secondary-dark: #018786; /* Darker shade for hover/active */
+  --color-background: #f4f7f6; /* Light gray background */
+  --color-surface: #ffffff; /* White for cards/components background */
+  --color-text-primary: #212121; /* Dark gray for main text */
+  --color-text-secondary: #616161; /* Muted gray for secondary text/labels */
+  --color-text-disabled: #bdbdbd; /* Light gray for disabled text */
+  --color-error: #b00020; /* Red for error messages */
+  --color-success: #4caf50; /* Green for success messages */
+  --color-warning: #ffc107; /* Yellow for warnings */
+  --color-border: #e0e0e0; /* Light gray for borders */
+
+  /* Typography */
+  --font-family-sans-serif: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-base: 16px;
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.5rem; /* 24px */
+  --font-size-h1: 2.5rem; /* 40px */
+  --font-size-h2: 2rem; /* 32px */
+  --font-size-h3: 1.75rem; /* 28px */
+  --font-size-h4: 1.5rem; /* 24px */
+
+  /* Spacing */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+  /* Transitions */
+  --transition-speed-fast: 0.15s;
+  --transition-speed-normal: 0.3s;
+  --transition-ease: ease-in-out;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Base HTML & Body Styles                                                 */
+/* -------------------------------------------------------------------------- */
+html, body, #root {
+  height: 100%; /* Ensure full height for layout */
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased; /* Improve font rendering on macOS/iOS */
+  -moz-osx-font-smoothing: grayscale; /* Improve font rendering on macOS/iOS */
+  display: flex; /* Use flexbox for root layout */
+  justify-content: center; /* Center content horizontally */
+  align-items: flex-start; /* Align content to the top */
+  padding: var(--spacing-lg); /* Add some padding around the main app content */
+  overflow-y: auto; /* Allow scrolling if content exceeds viewport height */
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Typography                                                              */
+/* -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+h4 { font-size: var(--font-size-h4); }
+h5 { font-size: var(--font-size-xl); }
+h6 { font-size: var(--font-size-lg); }
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-speed-fast) var(--transition-ease);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. Form Elements Base Styles                                               */
+/* -------------------------------------------------------------------------- */
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  transition: background-color var(--transition-speed-fast) var(--transition-ease),
+              color var(--transition-speed-fast) var(--transition-ease),
+              box-shadow var(--transition-speed-fast) var(--transition-ease);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. Accessibility & Focus States                                            */
+/* -------------------------------------------------------------------------- */
+/* Universal focus style for better accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+/* Hide outline for mouse users, but show for keyboard users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 7. Utility Classes (Optional, for general use)                             */
+/* -------------------------------------------------------------------------- */
+.container {
+  max-width: 960px; /* Max width for the main content area */
+  width: 100%;
+  margin: 0 auto; /* Center the container */
+  padding: var(--spacing-md);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 8. App-specific global styles (e.g., main layout structure)                */
+/* -------------------------------------------------------------------------- */
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* A bit wider for the overall app container */
+  min-height: 100%; /* Ensure root takes full height */
+  padding: var(--spacing-lg) 0; /* Vertical padding, horizontal handled by body */
+}
+
+/* Main app container styling */
+.App {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
+  width: 100%;
+  max-width: 768px; /* Max width for the todo app content itself */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: var(--spacing-md);
+  }
+
+  .App {
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+  }
+
+  h1 { font-size: var(--font-size-h2); }
+  h2 { font-size: var(--font-size-h3); }
+  h3 { font-size: var(--font-size-h4); }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: var(--spacing-sm);
+  }
+
+  .App {
+    padding: var(--spacing-md);
+  }
+
+  h1 { font-size: var(--font-size-h3); }
+  h2 { font-size: var(--font-size-h4); }
+}
