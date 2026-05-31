@@ -1,0 +1,62 @@
+```json
+{
+  "compilerOptions": {
+    // Base URL for resolving non-relative module names.
+    // This allows for absolute imports relative to the 'src' directory,
+    // e.g., `import TodoForm from 'components/TodoForm'` instead of `../../components/TodoForm`.
+    "baseUrl": "src",
+    // Specify JSX factory for React.
+    // 'react-jsx' is recommended for React 17+ with the new JSX transform.
+    // For older React versions or if not using the new transform, 'react' might be used.
+    "jsx": "react-jsx",
+    // Specify ECMAScript target version.
+    // 'esnext' or 'es2017' are common for modern React applications.
+    "target": "esnext",
+    // Specify library files to be included in the compilation.
+    // 'dom' for browser APIs, 'dom.iterable' for iterable DOM types, 'esnext' for modern JavaScript features.
+    "lib": ["dom", "dom.iterable", "esnext"],
+    // Enable synthetic default imports for better interoperability with CommonJS modules.
+    "allowSyntheticDefaultImports": true,
+    // Enables a full range of interoperability between CommonJS and ES Modules.
+    "esModuleInterop": true,
+    // Resolve modules using Node.js style.
+    "moduleResolution": "node",
+    // Allow JavaScript files to be imported into other files.
+    "allowJs": true,
+    // Do not emit compiler output for source map files.
+    "noEmit": true,
+    // Enable strict type-checking options.
+    // While this is a JS project, some strictness can help with editor tooling and catching common errors.
+    "strict": true,
+    // Skip type checking of all declaration files.
+    "skipLibCheck": true,
+    // Ensure that casing of paths in imports matches the file system.
+    "forceConsistentCasingInFileNames": true,
+    // Report errors on unused locals.
+    "noUnusedLocals": true,
+    // Report errors on unused parameters.
+    "noUnusedParameters": true,
+    // Report errors on fallthrough cases in switch statement.
+    "noFallthroughCasesInSwitch": true,
+    // Disallow `this` expressions with an implicit `any` type.
+    "noImplicitThis": true,
+    // Disallow `any` type in expressions and declarations.
+    // Can be set to false if you prefer less strictness in a JavaScript project.
+    "noImplicitAny": false,
+    // Paths for module resolution.
+    // This allows for more specific aliases, complementing or extending 'baseUrl'.
+    // For example, `import TodoForm from 'components/TodoForm'`
+    "paths": {
+      "components/*": ["src/components/*"],
+      "hooks/*": ["src/hooks/*"],
+      "services/*": ["src/services/*"]
+    }
+  },
+  // Files to include in the project context.
+  // This typically includes all JavaScript and JSX files in the 'src' directory.
+  "include": ["src"],
+  // Files to exclude from the project context.
+  // 'node_modules' and 'build' are standard exclusions to improve performance and avoid errors.
+  "exclude": ["node_modules", "build"]
+}
+```
